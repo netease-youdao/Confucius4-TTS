@@ -865,6 +865,7 @@ class ConfuciusTTSVLLM:
         lang: str,
         prompt_wav: str,
         request_id: Optional[str] = None,
+        raw: bool = False,
         n_timesteps: int = 25,
         inference_cfg_rate: float = 0.7,
         max_text_tokens_per_segment: int = 80,
@@ -881,6 +882,7 @@ class ConfuciusTTSVLLM:
             lang: Language code (e.g. "zh", "en", "ja", "ko")
             prompt_wav: Path to the reference audio for voice cloning
             request_id: Optional id used to tag segments in logs
+            raw: If true, skip text normalization and use input text as-is
             n_timesteps: Number of flow-matching steps for S2A
             inference_cfg_rate: Classifier-free guidance scale
             max_text_tokens_per_segment: Max tokens per segment before splitting
@@ -890,10 +892,16 @@ class ConfuciusTTSVLLM:
         Returns:
             Generated waveform on CPU, shape (1, T_audio) at the target sample rate
         """
-        # Normalize text (punctuation, numbers, etc.).
-        text = self.normalizer.normalize(text, language=lang)
-        if verbose:
-            print(f"[ConfuciusTTSVLLM] normalized: {text}")
+        # Normalize text (punctuation, numbers, etc.). Skipped when raw is True
+        # (the caller takes responsibility for the text, e.g. it already applied
+        # its own language-specific normalization).
+        if raw:
+            if verbose:
+                print(f"[ConfuciusTTSVLLM] skipping normalization (raw=True): {text}")
+        else:
+            text = self.normalizer.normalize(text, language=lang)
+            if verbose:
+                print(f"[ConfuciusTTSVLLM] normalized: {text}")
 
         # Extract conditioning from the reference audio.
         wav_16k, wav_tgt = self._load_prompt(prompt_wav)
@@ -944,6 +952,7 @@ class ConfuciusTTSVLLM:
         lang: str,
         prompt_wav: str,
         request_id: Optional[str] = None,
+        raw: bool = False,
         n_timesteps: int = 25,
         inference_cfg_rate: float = 0.7,
         max_text_tokens_per_segment: int = 80,
@@ -964,6 +973,7 @@ class ConfuciusTTSVLLM:
             lang: Language code (e.g. "zh", "en", "ja", "ko")
             prompt_wav: Path to the reference audio for voice cloning
             request_id: Optional id used to tag segments in logs
+            raw: If true, skip text normalization and use input text as-is
             n_timesteps: Number of flow-matching steps for S2A
             inference_cfg_rate: Classifier-free guidance scale
             max_text_tokens_per_segment: Max tokens per segment before splitting
@@ -976,10 +986,16 @@ class ConfuciusTTSVLLM:
         Yields:
             Waveform chunks on CPU, each shape (1, T_chunk).
         """
-        # Normalize text (punctuation, numbers, etc.).
-        text = self.normalizer.normalize(text, language=lang)
-        if verbose:
-            print(f"[ConfuciusTTSVLLM-stream] normalized: {text}")
+        # Normalize text (punctuation, numbers, etc.). Skipped when raw is True
+        # (the caller takes responsibility for the text, e.g. it already applied
+        # its own language-specific normalization).
+        if raw:
+            if verbose:
+                print(f"[ConfuciusTTSVLLM-stream] skipping normalization (raw=True): {text}")
+        else:
+            text = self.normalizer.normalize(text, language=lang)
+            if verbose:
+                print(f"[ConfuciusTTSVLLM-stream] normalized: {text}")
 
         # Extract conditioning from the reference audio.
         wav_16k, wav_tgt = self._load_prompt(prompt_wav)
