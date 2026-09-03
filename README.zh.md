@@ -385,6 +385,15 @@ Confucius4-TTS 在多语种及跨语种零样本 TTS 基准测试中表现优异
 
 ---
 
+## 🤝 商务合作
+
+如有 Confucius4-TTS 相关的商业合作、产品集成或其他商务需求，欢迎联系我们：
+
+- **联系电话：** 010-82558901
+- **商务邮箱：** AIcloud_Business@corp.youdao.com
+
+---
+
 ## 致谢
 
 Confucius4-TTS 基于以下开源项目构建：
