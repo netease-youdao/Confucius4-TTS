@@ -11,7 +11,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a href="./LICENSE"><img src="https://img.shields.io/badge/code_license-Apache%202.0-blue"></a>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="https://confucius4-tts.youdao.com/gradio/"><img src="https://img.shields.io/badge/Demo-在线体验-orange"></a>
+    <a href="https://huggingface.co/spaces/CharlesW/Confucius4-TTS"><img src="https://img.shields.io/badge/Demo-在线体验-orange"></a>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a href="https://2901733926.github.io/Confucius4-TTS/"><img src="https://img.shields.io/badge/GitHub.io-Demo_Page-blue?logo=GitHub&style=flat-square"></a>
     &nbsp;&nbsp;&nbsp;&nbsp;
